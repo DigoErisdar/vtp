@@ -3,21 +3,25 @@
         <v-container>
             <h1>
                 {{ $route.meta.title }}
+                <!--#TODO: Валидация на только айди-->
             </h1>
             <v-form>
                 <v-container>
                     <v-row>
                         <v-col cols="12" xs="12" sm="6">
-                            <v-text-field v-model="form.name" label="Имя" />
+                            <v-text-field v-model="form.name" label="Имя"/>
                         </v-col>
+                        <!--#TODO: Выбор на русском языке-->
                         <v-col cols="12" xs="12" sm="6">
                             <v-select :items="rolesValues" v-model="form.role" label="Должность"></v-select>
                         </v-col>
                     </v-row>
                     <v-row>
+                        <!--#TODO: Маску-->
                         <v-col cols="12" xs="12" sm="6">
                             <v-text-field v-model="form.phone" label="Номер телефона"/>
                         </v-col>
+                        <!--#TODO: Маску-->
                         <v-col cols="12" xs="12" sm="6">
                             <v-text-field v-model="form.birthday" label="День рождения"/>
                         </v-col>
@@ -71,9 +75,11 @@
                     return data.json()
                 })
                 .then(items => {
-                    this.form = items.filter(item => {
-                        return item.id === parseInt(this.$route.params.id);
-                    })[0];
+                    if (this.$route.params.id) {
+                        this.form = items.filter(item => {
+                            return item.id === parseInt(this.$route.params.id);
+                        })[0];
+                    }
                 })
         },
         computed: {
