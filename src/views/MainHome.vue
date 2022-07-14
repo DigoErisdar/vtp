@@ -7,7 +7,7 @@
             ></employe-filters>
             <v-row>
                 <v-col cols="12">
-                    <v-btn color="primary" to="/add">Добавить пользователя</v-btn>
+                    <v-btn :to="{name:'AddPage'}" color="primary">Добавить пользователя</v-btn>
                 </v-col>
             </v-row>
             <employe-items :items="displayEmployees" :roles="roles"></employe-items>
@@ -24,7 +24,12 @@
         name: 'MainHome',
 
         components: {EmployeFilters, EmployeItems},
-
+        props: {
+            roles: {
+                type: Object,
+                default: () => {},
+            },
+        },
         data() {
             return {
                 filters: {
@@ -34,11 +39,6 @@
                 sort: () => {
                 },
                 employees: [],
-                roles: {
-                    'cook': "Повар",
-                    'waiter': "Официант",
-                    'driver': "Водитель",
-                },
             }
         },
         mounted() {
