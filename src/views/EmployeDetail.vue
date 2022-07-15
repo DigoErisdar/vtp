@@ -19,7 +19,7 @@
                         <v-col cols="12" xs="12" sm="6">
                             <v-text-field v-model="form.phone" label="Номер телефона" v-maska="'+# (###) ###-####'"/>
                         </v-col>
-                        <!--#TODO: Маску-->
+                        <!--#TODO: Vuetify 3 нет датыпикера-->
                         <v-col cols="12" xs="12" sm="6">
                             <v-text-field v-model="form.birthday" label="День рождения" v-maska="dateMask"/>
                         </v-col>
@@ -61,7 +61,7 @@
                 form: {
                     name: "",
                     phone: "",
-                    birthday: new Date(),
+                    birthday: "",
                     isArchive: false,
                     role: "",
                 },
@@ -81,11 +81,8 @@
                 })
         },
         methods: {
-            getRole(role) {
-                return this.roles[role] || "";
-            },
             submit(){
-                this.$emit('updateOrCreateEmployee', this.form);
+                // #TODO: Vuex?
             },
         },
         computed: {
