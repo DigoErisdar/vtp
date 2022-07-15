@@ -2,23 +2,32 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
     {
-        path: '/',
-        name: 'Index',
-        meta: {
-            title: "Главная"
-        },
-        component: () => import(/* webpackChunkName: "about" */ '../views/MainHome.vue')
+      path: '/',
+      redirect: {
+          name: "Employees",
+      }
     },
     {
-        path: '/add',
+        path: '/employees',
+        name: 'Employees',
+        meta: {
+            title: "Сотрудники"
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/MainHome.vue'),
+        children: [
+
+        ],
+    },
+    {
+        path: '/employees/add',
         name: "AddPage",
         meta: {
-            title: "Доабвить сотрудника",
+            title: "Добавить сотрудника",
         },
         component: () => import('../views/EmployeDetail.vue')
     },
     {
-        path: '/:id/edit',
+        path: '/employees/:id/edit',
         name: "EditPage",
         meta: {
             title: "Редактировать сотрудника",

@@ -2,7 +2,7 @@
     <v-row>
         <v-col>
             <v-select
-                    :items="listRoles"
+                    :items="roles"
                     label="Должность"
                     multiple
                     v-model="form.role"
@@ -69,9 +69,7 @@
         },
         watch: {
             "form.role": function (roles) {
-                this.filters.role = roles.map(role => {
-                    return this.keysRoles[role]
-                })
+                this.filters.role = Object.values(roles);
                 this.$emit("updateFilters", this.filters);
             },
             "form.isArchive": function (isArchive) {
@@ -87,19 +85,9 @@
             }
         },
         computed: {
-            listRoles() {
-                return Object.values(this.roles);
-            },
             sortItemsTitles() {
                 return Object.keys(this.sortItems);
             },
-            keysRoles() {
-                let temp = {};
-                for (let k in this.roles) {
-                    temp[this.roles[k]] = k;
-                }
-                return temp;
-            }
         }
     }
 </script>

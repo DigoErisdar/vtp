@@ -12,11 +12,11 @@
         <v-app-bar app
         >
             <v-app-bar-nav-icon @click.stop="drawer = !drawer" variant="text"></v-app-bar-nav-icon>
-            <v-app-bar-title>Главная</v-app-bar-title>
+            <v-app-bar-title>{{ $route.meta.title }}</v-app-bar-title>
         </v-app-bar>
 
         <v-main>
-            <router-view :roles="roles" />
+            <router-view :roles="roles"/>
         </v-main>
     </v-app>
 </template>
@@ -29,11 +29,11 @@
             return {
                 drawer: false,
                 group: null,
-                roles: {
-                    'cook': "Повар",
-                    'waiter': "Официант",
-                    'driver': "Водитель",
-                },
+                roles: [
+                    {value: 'cook', title: "Повар"},
+                    {value: 'waiter', title: "Официант"},
+                    {value: 'driver', title: "Водитель"},
+                ],
                 items: [
                     {
                         title: 'Главная',
@@ -42,7 +42,6 @@
                 ],
             }
         },
-
         watch: {
             group() {
                 this.drawer = false

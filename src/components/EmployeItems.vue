@@ -1,6 +1,6 @@
 <template>
     <v-row class="fill-height">
-        <v-col :key="item.id" lg="4" sm="6" v-for="item in items" xs="12" >
+        <v-col :key="item.id" lg="4" sm="6" v-for="item in items" xs="12">
             <v-card elevation="5" class="fill-height">
                 <v-card-title>{{ item.name }}</v-card-title>
                 <v-card-subtitle> {{ getRole(item.role) }}</v-card-subtitle>
@@ -9,14 +9,13 @@
                     <p>День рождение: {{ item.birthday }}</p>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn color="primary" :to="getLink(item)">
+                    <v-btn color="primary" :to="{name: 'EditPage', params: {id:item.id}}">
                         Редактировать
                     </v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
     </v-row>
-
 </template>
 
 <script>
@@ -29,20 +28,17 @@
             },
             roles: {
                 type: Object,
-                default: () => {},
+                default: () => {
+                },
             }
         },
         methods: {
             getRole(role) {
-                return this.roles[role] || "";
-            },
-            getLink(item){
-                return item.id + "/edit/"
+                return this.roles.filter(item => item.value.localeCompare(role))[0].title || "";
             },
         }
     }
 </script>
 
 <style scoped>
-
 </style>

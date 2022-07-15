@@ -5,25 +5,23 @@
                 {{ $route.meta.title }}
                 <!--#TODO: Валидация на только айди-->
             </h1>
-            <v-form>
+            <v-form @submit.prevent="submit">
                 <v-container>
                     <v-row>
                         <v-col cols="12" xs="12" sm="6">
                             <v-text-field v-model="form.name" label="Имя"/>
                         </v-col>
-                        <!--#TODO: Выбор на русском языке-->
                         <v-col cols="12" xs="12" sm="6">
                             <v-select :items="rolesValues" v-model="form.role" label="Должность"></v-select>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <!--#TODO: Маску-->
                         <v-col cols="12" xs="12" sm="6">
-                            <v-text-field v-model="form.phone" label="Номер телефона"/>
+                            <v-text-field v-model="form.phone" label="Номер телефона" v-maska="'+# (###) ###-####'"/>
                         </v-col>
                         <!--#TODO: Маску-->
                         <v-col cols="12" xs="12" sm="6">
-                            <v-text-field v-model="form.birthday" label="День рождения"/>
+                            <v-text-field v-model="form.birthday" label="День рождения" v-maska="dateMask"/>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -33,10 +31,10 @@
                     </v-row>
                     <v-row>
                         <v-col cols="6">
-                            <v-btn :to="{name: 'Index'}" class="mx-auto" width="100%">На главную</v-btn>
+                            <v-btn :to="{name: 'Employees'}" class="mx-auto" width="100%">На главную</v-btn>
                         </v-col>
                         <v-col cols="6">
-                            <v-btn color="primary" class="mx-auto" width="100%">
+                            <v-btn color="primary" class="mx-auto" width="100%" type="submit">
                                 <template v-if="$route.params.id">Сохранить</template>
                                 <template v-else>Добавить</template>
                             </v-btn>
@@ -82,15 +80,22 @@
                     }
                 })
         },
+        methods: {
+            getRole(role) {
+                return this.roles[role] || "";
+            },
+            submit(){
+                this.$emit('updateOrCreateEmployee', this.form);
+            },
+        },
         computed: {
             rolesKeys() {
                 return Object.keys(this.roles);
-            }
-            ,
+            },
             rolesValues() {
                 return Object.values(this.roles);
             }
-        }
+        },
     }
 </script>
 
