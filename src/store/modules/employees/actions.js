@@ -1,27 +1,22 @@
-import api from "@/plugins/api";
+
 
 export default {
     fetchEmployees(context) {
-        return api.get('employees/123213')
+        if (context.state.itemsLoaded){
+            return context.state.items;
+        } else {
+            return fetch("/employees.json")
             .then(response => {
-                return response.data
+                return response.json()
             })
             .then(data => {
-                context.commit('setEmployees', data.results)
-            })
-            .catch(response => {
-                console.log(response)
-            })
-        // return fetch("employees.json")
-        //     .then(response => {
-        //         return response.json()
-        //     })
-        //     .then(data => {
-        //         context.commit('setEmployees', data);
-        //     });
+                context.commit('SET_EMPLOYEES', data);
+            });
+        }
+
     },
-    appendEmploye(context, employee) {
+    addEmploye(context, employee) {
         employee['id'] = new Date().valueOf();
-        context.commit('appendEmploye', employee);
+        context.commit('ADD_EMPLOYE', employee);
     }
 }

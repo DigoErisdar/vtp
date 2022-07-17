@@ -3,7 +3,6 @@
         <v-container>
             <h1>
                 {{ $route.meta.title }}
-                <!--#TODO: Валидация на только айди-->
             </h1>
             <v-form @submit.prevent="submit" ref="form" v-model="valid" lazy-validation>
                 <v-container>
@@ -68,7 +67,7 @@
                                     class="mx-auto"
                                     width="100%"
                                     type="submit">
-                                <template v-if="$route.params.id">Сохранить</template>
+                                <template v-if="id">Сохранить</template>
                                 <template v-else>Добавить</template>
                             </v-btn>
                         </v-col>
@@ -80,11 +79,15 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "EmployeDetail",
         props: {
+            id: {
+                type: Number,
+                required: true,
+            },
             roles: {
                 type: Object,
                 default: () => {
@@ -108,32 +111,24 @@
                 }
             }
         },
-        mounted() {
-            fetch('/employees.json')
-                .then(data => {
-                    return data.json()
-                })
-                .then(items => {
-                    if (this.$route.params.id) {
-                        this.form = items.filter(item => {
-                            return item.id === parseInt(this.$route.params.id);
-                        })[0];
-                    }
-                })
-        },
         methods: {
-            ...mapActions('employees', ['appendEmploye']),
+            ...mapActions('employees', ['addEmploye', 'fetchEmployees']),
             submit() {
                 this.$refs.form.validate()
-                if (this.form.id === undefined) {
-                    this.appendEmploye(this.form);
+                if (isNaN(this.id)) {
+                    this.addEmploye(this.form);
                 }
             },
         },
+        async mounted() {
+            await this.fetchEmployees();
+            if (isNaN(this.id) && this.$route.name === 'EditPage') {
+                //    TODO: 404 page
+            }
+
+        },
         computed: {
-            rolesKeys() {
-                return Object.keys(this.roles);
-            },
+            ...mapGetters('employees', ['allEmployees']),
             rolesValues() {
                 return Object.values(this.roles);
             }

@@ -1,8 +1,9 @@
 export default {
-    setEmployees(state, employees) {
+    SET_EMPLOYEES(state, employees) {
         state.items = employees;
+        state.itemsLoaded = true;
     },
-    appendEmploye(state, employee) {
+    ADD_EMPLOYE(state, employee) {
         state.items.push(employee);
     }
 }

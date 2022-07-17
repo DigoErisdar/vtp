@@ -7,7 +7,7 @@
             ></employe-filters>
             <v-row>
                 <v-col cols="12">
-                    <v-btn :to="{name:'AddPage'}" color="primary">Добавить пользователя</v-btn>
+                    <v-btn :to="{name:'AddPage'}" color="primary">Добавить сотрудника</v-btn>
                 </v-col>
             </v-row>
             <employe-items :items="displayEmployees" :roles="roles"></employe-items>
@@ -23,7 +23,6 @@
 
     export default {
         name: 'MainHome',
-
         components: {EmployeFilters, EmployeItems},
         props: {
             roles: {

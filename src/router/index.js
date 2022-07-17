@@ -32,6 +32,11 @@ const routes = [
         meta: {
             title: "Редактировать сотрудника",
         },
+        props: route => {
+            return {
+                id: Number.parseInt(route.params.id, 10)
+            }
+        },
         component: () => import('../views/EmployeDetail.vue')
     }
 ];
