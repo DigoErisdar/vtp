@@ -19,6 +19,7 @@
 
     import EmployeItems from "@/components/EmployeItems";
     import EmployeFilters from "@/components/EmployeFilters";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: 'MainHome',
@@ -42,15 +43,10 @@
             }
         },
         mounted() {
-            fetch("employees.json")
-                .then(data => {
-                    return data.json()
-                })
-                .then(items => {
-                    this.employees = items;
-                });
+            this.fetchEmployees();
         },
         methods: {
+            ...mapActions('employees', ['fetchEmployees']),
             updateFilters(filters) {
                 this.filters = filters;
             },
@@ -59,8 +55,9 @@
             },
         },
         computed: {
+            ...mapGetters('employees', ['allEmployees']),
             displayEmployees() {
-                let response = this.employees;
+                let response = this.allEmployees;
                 if (this.filters.role.length > 0) {
                     response = response.filter(item => {
                         return this.filters.role.includes(item.role);
@@ -72,7 +69,7 @@
                     })
                 }
                 return response.sort(this.sort);
-            }
+            },
         }
     }
 </script>

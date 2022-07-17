@@ -34,7 +34,7 @@
         },
         methods: {
             getRole(role) {
-                return this.roles.filter(item => item.value.localeCompare(role))[0].title || "";
+                return this.roles.filter(item => item.value === role)[0].title || "";
             },
         }
     }
