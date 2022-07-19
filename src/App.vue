@@ -16,12 +16,24 @@
         </v-app-bar>
 
         <v-main>
+            <v-snackbar
+                    variant="text"
+                    :timeout="alert.timeout"
+                    v-model="alert.isOpen">
+                <v-alert
+                        :type="alert.type"
+                >
+                    {{ alert.text }}
+                </v-alert>
+            </v-snackbar>
             <router-view :roles="roles"/>
         </v-main>
     </v-app>
 </template>
 
 <script>
+
+    import {mapGetters} from "vuex";
 
     export default {
         name: 'App',
@@ -46,6 +58,9 @@
             group() {
                 this.drawer = false
             },
+        },
+        computed: {
+            ...mapGetters(['alert']),
         },
     }
 

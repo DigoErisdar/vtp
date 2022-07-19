@@ -27,7 +27,8 @@
         props: {
             roles: {
                 type: Object,
-                default: () => {},
+                default: () => {
+                },
             },
         },
         data() {
@@ -36,9 +37,7 @@
                     role: [],
                     isArchive: false,
                 },
-                sort: () => {
-                },
-                employees: [],
+                sort: () => {},
             }
         },
         mounted() {
@@ -58,14 +57,11 @@
             displayEmployees() {
                 let response = this.allEmployees;
                 if (this.filters.role.length > 0) {
-                    response = response.filter(item => {
-                        return this.filters.role.includes(item.role);
-                    })
+                    response = response
+                        .filter(item => this.filters.role.includes(item.role))
                 }
                 if (this.filters.isArchive) {
-                    response = response.filter(item => {
-                        return item.isArchive
-                    })
+                    response = response.filter(item => item.isArchive)
                 }
                 return response.sort(this.sort);
             },

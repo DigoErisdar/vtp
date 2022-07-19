@@ -112,11 +112,18 @@
             }
         },
         methods: {
-            ...mapActions('employees', ['addEmploye', 'fetchEmployees']),
+            ...mapActions('employees', ['addEmployee', 'editEmployee', 'fetchEmployees']),
+            ...mapActions(['setAlert']),
             submit() {
                 this.$refs.form.validate()
                 if (isNaN(this.id)) {
-                    this.addEmploye(this.form);
+                    this.addEmployee(this.form);
+                } else {
+                    this.form.id = this.id;
+                    this.editEmployee(this.form);
+                    this.setAlert({
+                        text: "Сотрудник отредактирован",
+                    })
                 }
             },
         },
@@ -124,6 +131,11 @@
             await this.fetchEmployees();
             if (isNaN(this.id) && this.$route.name === 'EditPage') {
                 //    TODO: 404 page
+            } else {
+                let item = this.allEmployees.find(item => item.id === this.id);
+                for (let key in this.form){
+                    this.form[key] = item[key];
+                }
             }
 
         },

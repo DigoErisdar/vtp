@@ -15,8 +15,11 @@ export default {
         }
 
     },
-    addEmploye(context, employee) {
+    addEmployee(context, employee) {
         employee['id'] = new Date().valueOf();
-        context.commit('ADD_EMPLOYE', employee);
+        context.commit('ADD_EMPLOYEE', employee);
+    },
+    editEmployee(context, employee){
+        context.commit('EDIT_EMPLOYEE', employee)
     }
 }
